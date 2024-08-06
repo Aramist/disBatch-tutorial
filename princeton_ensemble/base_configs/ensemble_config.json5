@@ -1,0 +1,28 @@
+{
+    "ARCHITECTURE": "VocalocatorEnsemble",
+    "MODEL_PARAMS": {
+        "OUTPUT_TYPE": "ENSEMBLE",
+        "CONSTITUENT_MODELS": [],
+    },
+
+    "GENERAL": {
+        "CONFIG_NAME": "ensemble",
+        "DEVICE": "GPU",  // 'GPU' or 'CPU'
+        "TORCH_SEED": 888,  // rng seeds for reproducibility
+        "NUMPY_SEED": 777,
+        "LOG_INTERVAL": 3,  // Amount of time between consecutive log messages
+        "SAVE_SAMPLE_OUTPUT": false,
+        "SAVE_LOSS_PLOT": false,
+    },
+
+    "DATA": {
+        "NUM_MICROPHONES": 24,
+        "COMPUTE_XCORRS": false, 
+        "TRAIN_BATCH_SIZE": 32,
+        "VAL_BATCH_SIZE": 64,
+        "CROP_LENGTH": 8192,
+        "ARENA_DIMS": [680, 680],
+        "ARENA_DIMS_UNITS": "MM",
+        "SAMPLE_RATE": 250000
+    },
+}

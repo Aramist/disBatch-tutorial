@@ -1,0 +1,44 @@
+{
+    "OPTIMIZATION": {
+        "NUM_EPOCHS": 50,
+        "OPTIMIZER": "SGD",
+        "MOMENTUM": 0.7,
+        "WEIGHT_DECAY": 1e-05,
+        "CLIP_GRADIENTS": true,
+        "INITIAL_LEARNING_RATE": 0.04,
+        "LR_PARAMS": {
+            "SCHEDULER": "COSINE_ANNEALING",
+            "MIN_LEARNING_RATE": 0.0,
+        }
+    },
+
+    "ARCHITECTURE": "Wavenet",
+    "MODEL_PARAMS": {
+        "NUM_BLOCKS": 20,
+        "CONV_CHANNELS": 128,
+        "XCORR_PAIRS": [[0, 6], [6, 12], [12, 18], [18, 0]],
+        "OUTPUT_TYPE": "GAUSSIAN_6D_ORIENTED",
+    },
+
+    "GENERAL": {
+        "CONFIG_NAME": "simple_network",
+        "DEVICE": "GPU",  // 'GPU' or 'CPU'
+        "TORCH_SEED": 888,  // rng seeds for reproducibility
+        "NUMPY_SEED": 777,
+        "LOG_INTERVAL": 3,  // Amount of time between consecutive log messages
+    },
+
+    "DATA": {
+        "NUM_MICROPHONES": 24,
+        "CROP_LENGTH": 8192,
+        "NODES_TO_LOAD": ["Nose", "Head"],
+        "BATCH_SIZE": 32,
+        "ARENA_DIMS": [615, 615, 425],
+        "ARENA_DIMS_UNITS": "MM",
+        "SAMPLE_RATE": 250000
+    },
+
+    "AUGMENTATIONS": {
+        "AUGMENT_DATA": true, // controls noise addition
+    },
+}
