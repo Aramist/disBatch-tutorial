@@ -53,7 +53,6 @@ model_dir=$2
 source ~/.bashrc
 source ~/venvs/general/bin/activate
 
-# Copy data to local disk
 dataset_path={dataset_path}
 
 hostname; date;
@@ -76,11 +75,17 @@ def make_runner_script(config_paths):
     output_paths = [model_dir / f"model_{i}" for i in range(len(config_paths))]
     with open(runner_script_path, "w") as f:
         for n, (config_path, output_path) in enumerate(zip(config_paths, output_paths)):
-            line = f"( chmod +x {training_script_path}; {training_script_path} {config_path} {output_path} ) &> {log_dir}/model_{n}.log\n"
+            line = (
+                f"( chmod +x {training_script_path} && "
+                f"{training_script_path} {config_path} {output_path} "
+                f") &> {log_dir}/model_{n}.log\n"
+            )
             f.write(line)
     num_jobs = min(20, len(config_paths))
     print(
-        f"module load disBatch; mkdir disbatch_logs; sbatch -n {num_jobs} -p gpu --gpus-per-task=1 --mem=32GB -c 6 -t 1-0 disBatch -p disbatch_logs/ {runner_script_path};"
+        "module load disBatch && "
+        "mkdir disbatch_logs && "
+        f"sbatch -n {num_jobs} -p gpu --gpus-per-task=1 --mem=32GB -c 6 -t 1-0 disBatch -p disbatch_logs/ {runner_script_path};"
     )
 
 
